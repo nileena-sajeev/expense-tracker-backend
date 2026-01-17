@@ -4,10 +4,20 @@ console.log("DATABASE_URL:", process.env.DATABASE_URL);
 const express = require("express");
 const cors = require("cors");
 
-
 const app = express();
 
-app.use(cors());
+app.get("/", (req, res) => {
+  res.send("✅ Expense Tracker Backend is running!");
+});
+
+// ✅ CORS FIX (allow Netlify frontend)
+app.use(
+  cors({
+    origin: "https://finoraaa.netlify.app",
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 // Routes
@@ -24,7 +34,6 @@ pool.query("select 1")
   .catch(err => {
     console.error("❌ DB error FULL:", err);
   });
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
