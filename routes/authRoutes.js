@@ -80,7 +80,7 @@ router.post("/limit", protect, async (req, res) => {
 
     await pool.query(
       "UPDATE users SET monthly_limit = $1 WHERE id = $2",
-      [limit, req.user]
+      [limit, req.user.id]
     );
 
     res.json({ message: "Limit updated" });
